@@ -14,12 +14,15 @@ use yii\db\ActiveRecord;
  * @property float $lng Longitude
  */
 
-class Pais extends ActiveRecord {
-    public static function tableName() {
+class Pais extends ActiveRecord
+{
+    public static function tableName()
+    {
         return 'pais';
     }
 
-    public function rules() {
+    public function rules()
+    {
         return [
             [['nome'], 'required'],
             [['lat', 'lng'], 'number'],
@@ -28,7 +31,8 @@ class Pais extends ActiveRecord {
         ];
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'Código',
             'nome' => 'Nome',
@@ -37,7 +41,8 @@ class Pais extends ActiveRecord {
         ];
     }
 
-    public function getEstados() {
+    public function getEstados()
+    {
         return $this->hasMany(Estado::className(), ['id_pais' => 'id']);
     }
 }

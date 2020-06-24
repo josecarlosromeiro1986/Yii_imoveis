@@ -3,14 +3,15 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
- * Modelo para a tabela "imovel_tipo".
- *
- * @property int $id Código
+ * Modelo para a tabela 'imovel_tipo'
+ * 
+ * @property integer $id Código 
  * @property string $descricao Descrição
  */
-class ImovelTipo extends \yii\db\ActiveRecord
+class ImovelTipo extends ActiveRecord
 {
     public static function tableName()
     {
@@ -20,8 +21,8 @@ class ImovelTipo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descricao'], 'required'],
-            [['descricao'], 'string', 'max' => 150],
+            ['descricao', 'required'],
+            ['descricao', 'string', 'max' => 150],
         ];
     }
 
@@ -33,7 +34,8 @@ class ImovelTipo extends \yii\db\ActiveRecord
         ];
     }
 
-    //public function getImoveis() {
-        //return $this->hasMany(Imovel::className(), ['id_tipo' => 'id']);
-    //}
+    /* public function getImoveis()
+    {
+        return $this->hasMany(Imovel::className(), ['id_tipo' => 'id']);
+    } */
 }

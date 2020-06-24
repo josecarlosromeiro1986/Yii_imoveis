@@ -14,12 +14,15 @@ use yii\db\ActiveRecord;
  * @property float $lat Latitude
  * @property float $lng Longitude
  */
-class Estado extends ActiveRecord {
-    public static function tableName() {
+class Estado extends ActiveRecord
+{
+    public static function tableName()
+    {
         return 'estado';
     }
 
-    public function rules() {
+    public function rules()
+    {
         return [
             [['id_pais', 'nome'], 'required'],
             [['id_pais'], 'integer'],
@@ -28,7 +31,8 @@ class Estado extends ActiveRecord {
         ];
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'Código',
             'id_pais' => 'País',
@@ -38,9 +42,8 @@ class Estado extends ActiveRecord {
         ];
     }
 
-    //TO-DO: Criar relacionamento para a tabela 'cidades'
-
-    public function getPais() {
+    public function getPais()
+    {
         return $this->hasOne(Pais::className(), ['id' => 'id_pais']);
     }
 }

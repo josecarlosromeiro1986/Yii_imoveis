@@ -9,6 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Imovel;
+use app\models\Caracteristica;
+use app\models\ImovelTipo;
 
 class SiteController extends Controller
 {
@@ -61,7 +64,30 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $imoveis = Imovel::find()->all();
+        $contaImoveis = Imovel::find()->count();
+        $contaCaracteristicas = Caracteristica::find()->count();
+        $contaTipos = ImovelTipo::find()->count();
+
+        return $this->render('index', [
+            'imoveis' => $imoveis,
+            'contaImoveis' => $contaImoveis,
+            'contaCaracteristicas' => $contaCaracteristicas,
+            'contaTipos' => $contaTipos,
+        ]);
+    }
+
+    /**
+     * Exibe informações sobre um imóvel
+     * 
+     * @return string
+     */
+    public function actionInformacoesImovel($id)
+    {
+        $imovel = Imovel::findOne($id);
+        return $this->render('informacoes-imovel', [
+            'imovel' => $imovel,
+        ]);
     }
 
     /**

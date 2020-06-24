@@ -3,14 +3,15 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
- * Modelo para a tabela "caracteristica".
- *
- * @property int $id Código
+ * Modelo para a tabela 'caracteristica'
+ * 
+ * @property integer $id Código 
  * @property string $descricao Descrição
  */
-class Caracteristica extends \yii\db\ActiveRecord
+class Caracteristica extends ActiveRecord
 {
     public static function tableName()
     {
@@ -20,8 +21,8 @@ class Caracteristica extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descricao'], 'required'],
-            [['descricao'], 'string', 'max' => 50],
+            ['descricao', 'required'],
+            ['descricao', 'string', 'max' => 50],
         ];
     }
 
@@ -33,7 +34,7 @@ class Caracteristica extends \yii\db\ActiveRecord
         ];
     }
 
-    //public function getImovelCaracteristicas() {
-        //return $this->hasMany(ImovelCaracteristica::className(), ['id_caracteristica' => 'id']);
-    //}
+    /* public function getImovelCaracteristicas() {
+      return $this->hasMany(ImovelCaracteristica::className(), ['id_caracteristica' => 'id']);
+    } */
 }

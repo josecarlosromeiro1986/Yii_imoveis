@@ -3,17 +3,18 @@
 namespace app\controllers;
 
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\data\ActiveDataProvider;
 use app\models\ImovelTipo;
+use yii\db\IntegrityException;
 
 /**
- * ImovelTipoController implementa as ações para o CRUD.
+ * Classe ImovelTipoController implementa as ações de CRUD para o modelo ImovelTipo
  */
 class ImovelTipoController extends Controller
 {
     /**
-     * Lista todos os modelos ImovelTipo.
+     * Ação para exibir a view 'index'
      */
     public function actionIndex()
     {
@@ -30,16 +31,16 @@ class ImovelTipoController extends Controller
     }
 
     /**
-     * Cria um novo modelo ImovelTipo
-     * Se criar com sucesso, carrega a view 'index' com mensagem de sucesso
+     * Ação para criar um modelo ImovelTipo
+     * Se realizar o insert redireciona para a view 'index'
      */
     public function actionCreate()
     {
         $model = new ImovelTipo();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Tipo de imóvel criado com sucesso.');
-            return $this->redirect(['index']);
+            Yii::$app->session->setFlash('success', 'Imóvel cadastrado com sucesso.');
+            return $this->redirect(['/imovel-tipo/index']);
         }
 
         return $this->render('create', [
@@ -48,17 +49,18 @@ class ImovelTipoController extends Controller
     }
 
     /**
-     * Edita um modelo ImovelTipo existente
-     * Se editar com sucesso carrega a view 'index' com mensagem de sucesso
-     * @param integer $id
+     * Ação para editar um modelo ImovelTipo existente
+     * Se realizar o update redireciona para a view 'index'
+     * 
+     * @param integer $id 
      */
     public function actionUpdate($id)
     {
         $model = ImovelTipo::findOne($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Tipo de imóvel atualizado com sucesso.');
-            return $this->redirect(['index']);
+            Yii::$app->session->setFlash('success', 'Imóvel alterado com sucesso.');
+            return $this->redirect(['/imovel-tipo/index']);
         }
 
         return $this->render('update', [
@@ -67,16 +69,39 @@ class ImovelTipoController extends Controller
     }
 
     /**
-     * Exclui um modelo ImovelTipo existente.
-     * Se excluir com sucesso redireciona para a view 'index' com mensagem de sucesso.
+     * Ação para excluir um modelo ImovelTipo existente
+     * Se realizar a exclusão redireciona para a view 'index'
+     * 
      * @param integer $id
      */
     public function actionDelete($id)
     {
-        ImovelTipo::findOne($id)->delete();
-        Yii::$app->session->setFlash('success', 'Tipo de imóvel removido com sucesso.');
 
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+
+        try {
+            $model->delete();
+            Yii::$app->session->setFlash('success', 'Tipo de imóvel removido com sucesso.');
+            return $this->redirect(['index']);
+        } catch (IntegrityException $e) {
+            Yii::$app->session->setFlash('warning', 'Não foi possível excluir este tipo de imóvel. Verifique se há imóveis cadastrados antes de excluí-lo');
+            return $this->redirect(['index']);
+        }
     }
 
+    /**
+     * Procura um modelo Imovel de acordo com o id informado.
+     * Se o modelo não for encontrado exibe uma mensagem de erro na tela.
+     * @param integer $id
+     * @return ImovelTipo modelo
+     * @throws NotFoundHttpException se o modelo não for encontrado
+     */
+    protected function findModel($id)
+    {
+        if (($model = ImovelTipo::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('A página que você procura não existe.');
+    }
 }

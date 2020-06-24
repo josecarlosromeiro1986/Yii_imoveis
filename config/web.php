@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'name' => 'Gerenciador de Imóveis',
     'language' => 'pt-br',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -15,7 +16,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'mrtcSxneueLw_ZcYaO9anAY7xDPXXvwS',
+            'cookieValidationKey' => '4GHp65JGTi9myi_MDVzyvIL_DKhee7Fh',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

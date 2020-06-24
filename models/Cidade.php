@@ -6,7 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * Modelo para a tabela 'cidade'
+ * Modelo para a tabela "cidade"
  * 
  * @property int $id Código
  * @property int $id_estado Estado
@@ -14,12 +14,16 @@ use yii\db\ActiveRecord;
  * @property float $lat Latitude
  * @property float $lng Longitude
  */
-class Cidade extends ActiveRecord {
-    public static function tableName() {
+
+class Cidade extends ActiveRecord
+{
+    public static function tableName()
+    {
         return 'cidade';
     }
 
-    public function rules() {
+    public function rules()
+    {
         return [
             [['id_estado', 'nome'], 'required'],
             [['id_estado'], 'integer'],
@@ -28,7 +32,8 @@ class Cidade extends ActiveRecord {
         ];
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'Código',
             'id_estado' => 'Estado',
@@ -37,14 +42,23 @@ class Cidade extends ActiveRecord {
             'lng' => 'Longitude',
         ];
     }
-
-    //Relacionar os imóveis da cidade
-
-    /* public function getImoveis() {
+    /**
+     * Relaciona os imóveis da cidade
+     */
+    /* public function getImoveis()
+    {
         return $this->hasMany(Imovel::className(), ['id_cidade' => 'id']);
     } */
 
-    public function getEstado() {
+    /**
+     * Relaciona o estado que a cidade pertence */
+    public function getEstado()
+    {
         return $this->hasOne(Estado::className(), ['id' => 'id_estado']);
+    }
+
+    public function getNomeFormImovel()
+    {
+        return $this->nome . ' - ' . $this->estado->nome . ' (' . $this->estado->pais->nome . ')';
     }
 }
